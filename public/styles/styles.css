@@ -1,0 +1,31 @@
+body {
+    background-color: #ffebcd;
+}
+
+nav {
+    margin-left: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.jumbotron {
+    background-color: #ad3307;
+}
+
+h1 {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 10em;
+    color: #ffd000;
+}
+
+p {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 4em;
+    color: #ffd000;
+}
+
+li {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 4em;
+    color: #ffd000;
+}
