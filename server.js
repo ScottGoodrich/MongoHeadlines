@@ -1,5 +1,5 @@
 var express = require("express");
-var exhndbrs = require ("express-handlebars");
+var exphbs = require ("express-handlebars");
 var mongoose = require("mongoose");
 var logger = require("morgan");
 var axios = require("axios");
@@ -16,6 +16,9 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
