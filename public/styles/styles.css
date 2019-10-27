@@ -3,13 +3,20 @@ body {
 }
 
 nav {
-    margin-left: 2em;
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-left: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: .5em;
 }
 
 .jumbotron {
     background-color: #ad3307;
+    color: #ffd000;
+}
+
+.btn {
+    font-size: 1.5em;
+
 }
 
 h1 {

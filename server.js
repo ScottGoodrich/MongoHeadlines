@@ -27,6 +27,15 @@ mongoose.connect(MONGODB_URI);
 
 // Routes
 
+app.get("/", (req, res) => {
+
+    res.render("index");
+  });
+
+app.get("/saved", (req, res) => {
+  res.render("saved");
+});
+
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with axios
@@ -47,11 +56,8 @@ app.get("/scrape", function(req, res) {
           .children("a")
           .attr("href");
         result.content = $(this)
-            .children("a")
-            .attr("p");
-        result.image = $(this)
-            .children("a")
-            .attr(".featured-image");
+            .children("p")
+            .text();
   
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
@@ -84,11 +90,11 @@ app.get("/scrape", function(req, res) {
       });
   });
   
-  // Route for grabbing a specific Article by id, populate it with it's note
+  // Route for grabbing a specific Article by id, populate it with its comment
   app.get("/articles/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
     db.Article.findOne({ _id: req.params.id })
-      // ..and populate all of the notes associated with it
+      // ..and populate all of the comments associated with it
       .populate("note")
       .then(function(dbArticle) {
         // If we were able to successfully find an Article with the given id, send it back to the client
@@ -100,15 +106,15 @@ app.get("/scrape", function(req, res) {
       });
   });
   
-  // Route for saving/updating an Article's associated Note
+  // Route for saving/updating an Article's associated Comment
   app.post("/articles/:id", function(req, res) {
-    // Create a new note and pass the req.body to the entry
-    db.Note.create(req.body)
-      .then(function(dbNote) {
+    // Create a new comment and pass the req.body to the entry
+    db.Comment.create(req.body)
+      .then(function(dbComment) {
         // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
         // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
         // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-        return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbComment._id }, { new: true });
       })
       .then(function(dbArticle) {
         // If we were able to successfully update an Article, send it back to the client
